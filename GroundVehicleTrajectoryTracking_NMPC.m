@@ -21,16 +21,18 @@ RunSample = Simtime/timestep;
 X = zeros(n,RunSample+N+1); U = zeros(m,RunSample+N);
 Xr = zeros(n,size(X,2)+N+1); Ur = zeros(m,size(U,2)+N); % Equilibrium points
 
+% Trajectory Definition 
 Xr(1,N+2:RunSample+2+N) = (0:RunSample).*timestep*0.5;
 Xr(2,N+2:RunSample+2+N) = 0.5.*sin(0.5.*(0:RunSample).*timestep);
 Xr(1:2,RunSample+3+N:end) = ones(1,size(Xr,2)-RunSample-N-2).*Xr(1:2,RunSample+N+1);
-figure
-scatter(Xr(1,:) ,Xr(2,:))
-figure
-hold on
-plot(Xr(1,:))
-plot(Xr(2,:))
-hold off
+
+% figure
+% scatter(Xr(1,:) ,Xr(2,:))
+% figure
+% hold on
+% plot(Xr(1,:))
+% plot(Xr(2,:))
+% hold off
 %% Trajectory Tracking using NMPC
 xr = zeros(n,N);
 ur = zeros(m,N);
@@ -45,7 +47,7 @@ zek = [Xk;Uk];
 zek(1:n,1) = x-xr(:,1); 
 zek((N+1)*n+1:(N+1)*n+m) = u-ur(:,1);
 
-% Build QX,RU,H
+% Constraint Definition
 xmin = [0;-0.501;-pi];
 xmax = [10.01;0.501;pi];
 umin = [-80;-80];
